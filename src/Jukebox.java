@@ -4,6 +4,8 @@
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,7 +13,10 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -19,26 +24,34 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /* 1. Download the JavaZoom jar from here: http://bit.ly/javazoom
  * 2. Right click your project and add it as an External JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
-
+public class Jukebox implements Runnable, ActionListener {
+	JFrame J = new JFrame();
+	JPanel P = new JPanel();
+	JButton b1 = new JButton();
+	JButton b2 = new JButton();
+	JButton b3 = new JButton();
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Jukebox());
+		Jukebox J = new Jukebox();
+		J.showButton();
 	}
 
            public void run() {
 
 		// 3. Find an mp3 on your computer or on the Internet.
 		// 4. Create a Song
+        	   
 
 		// 5. Play the Song
-
+        	  
 		/*
-		 * 6. Create a user interface for your Jukebox so that the user can to
+		 * 6. Create a user interface for your Jukebox so that the user can 
 		 * choose which song to play. You can use can use a different button for
 		 * each song, or a picture of the album cover. When the button or album
 		 * cover is clicked, stop the currently playing song, and play the one
 		 * that was selected.
 		 */
+        	   
           }
 	/* Use this method to add album covers to your Panel. */
 	private JLabel loadImage(String fileName) {
@@ -46,7 +59,39 @@ public class Jukebox implements Runnable {
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
 	}
+	public void showButton() {
+		J.add(P);
+		J.setVisible(true);
+		P.add(b1);
+		P.add(b2);
+		P.add(b3);
+		b1.setText("Freesound Music");
+		b2.setText("Wing$");
+		b3.setText("Glorious");
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		b3.addActionListener(this);
+		J.pack();
+	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String song1 = "262259__shadydave__snowfall-final.mp3";
+ 	   Song s1 = new Song(song1);
+ 	   String song2 = "WINGS.mp3";
+ 	   Song s2 = new Song(song2);
+ 	   String song3 = "Glorious.mp3";
+ 	   Song s3 = new Song(song3);
+		if(e.getSource() == b1){
+			s1.play();
+		}
+		else if(e.getSource()== b2) {
+			s2.play();
+		}
+		else if(e.getSource()== b3) {
+			s3.play();
+		}
+	}
 }
 
 class Song {
