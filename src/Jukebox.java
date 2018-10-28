@@ -4,6 +4,7 @@
  */
 
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -27,9 +28,20 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 public class Jukebox implements Runnable, ActionListener {
 	JFrame J = new JFrame();
 	JPanel P = new JPanel();
+	JPanel P2 = new JPanel();
 	JButton b1 = new JButton();
 	JButton b2 = new JButton();
 	JButton b3 = new JButton();
+	JLabel JL1 = loadImage("freesound.jpg");
+	JLabel JL2 = loadImage("Wings.jpg");
+	JLabel JL3 = loadImage("Glorious.png");
+	String song1 = "262259__shadydave__snowfall-final.mp3";
+	   Song s1 = new Song(song1);
+	   String song2 = "WINGS.mp3";
+	   Song s2 = new Song(song2);
+	   String song3 = "Glorious.mp3";
+	   Song s3 = new Song(song3);
+	   Song songplaying;
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Jukebox());
 		Jukebox J = new Jukebox();
@@ -62,8 +74,11 @@ public class Jukebox implements Runnable, ActionListener {
 	public void showButton() {
 		J.add(P);
 		J.setVisible(true);
+		P.add(JL1);
 		P.add(b1);
+		P.add(JL2);
 		P.add(b2);
+		P.add(JL3);
 		P.add(b3);
 		b1.setText("Freesound Music");
 		b2.setText("Wing$");
@@ -76,21 +91,19 @@ public class Jukebox implements Runnable, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String song1 = "262259__shadydave__snowfall-final.mp3";
- 	   Song s1 = new Song(song1);
- 	   String song2 = "WINGS.mp3";
- 	   Song s2 = new Song(song2);
- 	   String song3 = "Glorious.mp3";
- 	   Song s3 = new Song(song3);
+		if(songplaying != null) {
+			songplaying.stop();
+		}
 		if(e.getSource() == b1){
-			s1.play();
+			songplaying = s1;
 		}
 		else if(e.getSource()== b2) {
-			s2.play();
+			songplaying = s2;
 		}
 		else if(e.getSource()== b3) {
-			s3.play();
+			songplaying = s3;
 		}
+		songplaying.play();
 	}
 }
 
